@@ -1,47 +1,43 @@
 ﻿namespace ServiceMultiImpl
 {
-    public class FactoryBuilder<I, P> where I : class
+    public class FactoryBuilder<TService, TKey> where TService : class
     {
         private readonly IServiceCollection _services;
-        private readonly FactoryTypes<I, P> _factoryTypes;
+        private readonly FactoryTypes<TService, TKey> _factoryTypes;
         public FactoryBuilder(IServiceCollection services)
         {
             _services = services;
-            _factoryTypes = new FactoryTypes<I, P>();
-        }
-        public FactoryBuilder<I, P> Add<T>(P p)
-            where T : class, I
-        {
-            _factoryTypes.ServiceList.Add(p, typeof(T));
-
+            _factoryTypes = new FactoryTypes<TService, TKey>();
             _services.AddSingleton(_factoryTypes);
-            _services.AddTransient<T>();
+        }
+        public FactoryBuilder<TService, TKey> Add<TImplementation>(TKey p)
+            where TImplementation : class, TService
+        {
+            _factoryTypes.ServiceList.Add(p, typeof(TImplementation));
+            _services.AddTransient<TImplementation>();
             return this;
         }
     }
-    public class FactoryTypes<I, P> where I : class
+ 
+
+    public interface IFactory<TService, TKey>
     {
-        public Dictionary<P, Type> ServiceList { get; set; } = new Dictionary<P, Type>();
+        TService Create(TKey p);
     }
 
-    public interface IFactory<I, P>
-    {
-        I Create(P p);
-    }
-
-    public class Factory<I, P> : IFactory<I, P> where I : class
+    public class Factory<TService, TKey> : IFactory<TService, TKey> where TService : class
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly FactoryTypes<I, P> _factoryTypes;
-        public Factory(IServiceProvider serviceProvider, FactoryTypes<I, P> factoryTypes)
+        private readonly FactoryTypes<TService, TKey> _factoryTypes;
+        public Factory(IServiceProvider serviceProvider, FactoryTypes<TService, TKey> factoryTypes)
         {
             _serviceProvider = serviceProvider;
             _factoryTypes = factoryTypes;
         }
 
-        public I Create(P p)
+        public TService Create(TKey p)
         {
-            return (I)_serviceProvider.GetService(_factoryTypes.ServiceList[p]);
+            return (TService)_serviceProvider.GetService(_factoryTypes.ServiceList[p]);
         }
     }
 }

@@ -8,9 +8,13 @@ public class TestController : ControllerBase
 {
     private readonly IService _service;
 
-    public TestController(IEnumerable<IService> services)
+    public TestController(//IEnumerable<IService> services
+        IFactory<IService, string> serviceFactory
+
+        )
     {
-        _service = services.FirstOrDefault();
+        //_service = services.FirstOrDefault();
+        _service = serviceFactory.Create("1");
     }
 
     [HttpGet]
