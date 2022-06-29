@@ -6,17 +6,16 @@ namespace ServiceMultiImpl.Controllers;
 [Route("[controller]")]
 public class TestController : ControllerBase
 {
+    private readonly IService _service;
 
-    private readonly ILogger<TestController> _logger;
-
-    public TestController(ILogger<TestController> logger)
+    public TestController(IEnumerable<IService> services)
     {
-        _logger = logger;
+        _service = services.FirstOrDefault();
     }
 
     [HttpGet]
     public string Get()
     {
-        return "Hello";
+        return _service.DoSth();
     }
 }
