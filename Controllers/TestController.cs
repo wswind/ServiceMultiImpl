@@ -8,18 +8,18 @@ public class TestController : ControllerBase
 {
     private readonly IService _service;
 
-    public TestController(//IEnumerable<IService> services
-        IFactory<IService, string> serviceFactory
-
+    public TestController(
+        IMultiImplServiceFactory<IService, string> serviceFactory
         )
     {
-        //_service = services.FirstOrDefault();
-        _service = serviceFactory.Create("3");
+        _service = serviceFactory.Create("2");
     }
 
     [HttpGet]
     public string Get()
     {
+        if (_service == null)
+            return "not implemented service";
         return _service.DoSth();
     }
 }

@@ -8,13 +8,13 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class DependencyExtensions
     {
-        public static ServiceFactoryBuilder<TService, TKey> AddMultiImplServiceFactory<TService, TKey>(this IServiceCollection services)
+        public static MultiImplServiceFactoryBuilder<TService, TKey> AddMultiImplServiceFactory<TService, TKey>(this IServiceCollection services)
             where TService : class
         {
-            FactoryTypes<TService, TKey> factoryTypes = new();
+            MultiImplTypeMapper<TService, TKey> factoryTypes = new();
             services.AddSingleton(factoryTypes);
-            services.AddTransient<IFactory<TService, TKey>, Factory<TService, TKey>>();
-            return new ServiceFactoryBuilder<TService, TKey>(services, factoryTypes);
+            services.AddTransient<IMultiImplServiceFactory<TService, TKey>, MultiImplServiceFactory<TService, TKey>>();
+            return new MultiImplServiceFactoryBuilder<TService, TKey>(services, factoryTypes);
         }
     }
 }
