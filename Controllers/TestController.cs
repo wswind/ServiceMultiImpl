@@ -14,7 +14,7 @@ public class TestController : ControllerBase
         )
     {
         //_service = services.FirstOrDefault();
-        _service = serviceFactory.Create("1");
+        _service = serviceFactory.Create("3");
     }
 
     [HttpGet]

@@ -1,20 +1,21 @@
-﻿//generic factory from https://stackoverflow.com/a/59338701/7726468
-//origin author is 'T Brown'
-//licence: CC BY-SA 4.0
+﻿//Origin Author is 'T Brown' from https://stackoverflow.com/a/59338701/7726468
+//Licence: CC BY-SA 4.0
+//Updated by Vincent Wang https://github.com/wswind/ServiceMultiImpl
 
 namespace ServiceMultiImpl
 {
-    public class FactoryBuilder<TService, TKey> where TService : class
+    public class ServiceFactoryBuilder<TService, TKey> where TService : class
     {
         private readonly IServiceCollection _services;
         private readonly FactoryTypes<TService, TKey> _factoryTypes;
-        public FactoryBuilder(IServiceCollection services)
+
+        public ServiceFactoryBuilder(IServiceCollection services, FactoryTypes<TService, TKey> factoryTypes)
         {
             _services = services;
-            _factoryTypes = new FactoryTypes<TService, TKey>();
-            _services.AddSingleton(_factoryTypes);
+            _factoryTypes = factoryTypes;
         }
-        public FactoryBuilder<TService, TKey> Add<TImplementation>(TKey p)
+
+        public ServiceFactoryBuilder<TService, TKey> Add<TImplementation>(TKey p)
             where TImplementation : class, TService
         {
             _factoryTypes.ServiceList.Add(p, typeof(TImplementation));
@@ -43,7 +44,6 @@ namespace ServiceMultiImpl
             return (TService)_serviceProvider.GetService(_factoryTypes.ServiceList[p]);
         }
     }
-
 
     public class FactoryTypes<TService, TKey> where TService : class
     {
