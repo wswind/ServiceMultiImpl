@@ -11,10 +11,10 @@
             _factoryTypes = factoryTypes;
         }
 
-        public MultiImplServiceFactoryBuilder<TService, TKey> Add<TImplementation>(TKey p)
+        public MultiImplServiceFactoryBuilder<TService, TKey> Add<TImplementation>(TKey key)
             where TImplementation : class, TService
         {
-            _factoryTypes.ServiceList.Add(p, typeof(TImplementation));
+            _factoryTypes.ServiceList.Add(key, typeof(TImplementation));
             _services.AddTransient<TImplementation>();
             return this;
         }
