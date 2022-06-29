@@ -1,4 +1,5 @@
-﻿//generic factory from https://stackoverflow.com/a/59338701/7726468 author is 'T Brown'
+﻿//generic factory from https://stackoverflow.com/a/59338701/7726468
+//origin author is 'T Brown'
 //licence: CC BY-SA 4.0
 
 namespace ServiceMultiImpl

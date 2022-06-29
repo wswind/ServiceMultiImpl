@@ -1,4 +1,8 @@
-﻿using ServiceMultiImpl;
+﻿//generic factory from https://stackoverflow.com/a/59338701/7726468
+//origin author is 'T Brown'
+//licence: CC BY-SA 4.0
+
+using ServiceMultiImpl;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
