@@ -1,4 +1,7 @@
-﻿namespace ServiceMultiImpl
+﻿//generic factory from https://stackoverflow.com/a/59338701/7726468 author is 'T Brown'
+//licence: CC BY-SA 4.0
+
+namespace ServiceMultiImpl
 {
     public class FactoryBuilder<TService, TKey> where TService : class
     {
@@ -18,7 +21,6 @@
             return this;
         }
     }
- 
 
     public interface IFactory<TService, TKey>
     {
@@ -39,5 +41,11 @@
         {
             return (TService)_serviceProvider.GetService(_factoryTypes.ServiceList[p]);
         }
+    }
+
+
+    public class FactoryTypes<TService, TKey> where TService : class
+    {
+        public Dictionary<TKey, Type> ServiceList { get; set; } = new Dictionary<TKey, Type>();
     }
 }
