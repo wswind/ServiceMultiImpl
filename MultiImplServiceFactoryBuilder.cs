@@ -1,4 +1,8 @@
-﻿namespace ServiceMultiImpl
+﻿//Origin Author is 'T Brown' from https://stackoverflow.com/a/59338701/7726468
+//Licence: CC BY-SA 4.0
+//Updated by Vincent Wang https://github.com/wswind/ServiceMultiImpl
+
+namespace ServiceMultiImpl
 {
     public class MultiImplServiceFactoryBuilder<TService, TKey> where TService : class
     {
