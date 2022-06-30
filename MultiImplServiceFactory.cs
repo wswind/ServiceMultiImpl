@@ -6,7 +6,7 @@ namespace ServiceMultiImpl
 {
     public interface IMultiImplServiceFactory<TService, TKey>
     {
-        TService Create(TKey p);
+        TService Create(TKey key);
     }
 
     public class MultiImplServiceFactory<TService, TKey> : IMultiImplServiceFactory<TService, TKey> where TService : class
